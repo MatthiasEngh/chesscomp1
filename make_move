@@ -1,0 +1,15 @@
+SCRIPT=$1
+FILE_IN=$2
+FILE_OUT=$3
+
+INITIAL_DATA=$(cat $FILE_IN)
+
+function make_move {
+  OUT_DATA=$(echo $INITIAL_DATA | source ./$SCRIPT)
+  echo $OUT_DATA > $FILE_OUT
+}
+
+TIME_TAKEN=$((time make_move) 2>&1)
+echo $TIME_TAKEN
+echo $TIME_TAKEN > time.txt
+
