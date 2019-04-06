@@ -1,0 +1,24 @@
+Timing
+
+19:40 - 02:00
+ => 6:20
+
+09:30 - 18:00
+ = > 8:30
+
+
+Milestone 1:
+  list all possible moves 9:30
+
+Milestone 2:
+  compare current position moves by subsequent moves
+  11:00
+
+
+
+Engine iterations:
+
+1 random moves
+2 moves based on minimzing opponent responses
+3 moves based on taking opponent pieces
+4 moves based on maximizing personal moves
