@@ -8,7 +8,7 @@ def find_move_with_fewest_opponent_options(board):
   for move in moves:
     current_result = apply_metric(board, move)
     current_best = max_result(current_best, current_result)
-  return current_best
+  return current_best[0]
 
 def evaluate_position(board):
   return len(list(board.legal_moves))
