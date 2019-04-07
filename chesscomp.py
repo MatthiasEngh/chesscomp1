@@ -32,7 +32,7 @@ def min_personal_moves(board):
   for move in board.legal_moves:
     board.push(move)
     yield [move, minimize(legal_moves(board), count_moves_eval)[1]]
-    board.pop
+    board.pop()
 
 def node_value_eval(move_and_value):
   return move_and_value[1]
