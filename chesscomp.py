@@ -10,7 +10,7 @@ def maximize(itermoves, count_moves_eval):
   evaluated_moves = evaluate_nodes(itermoves, count_moves_eval)
   current_result = next(evaluated_moves)
   for move_evaluation in evaluated_moves:
-    current_result = min_result(current_result, move_evaluation)
+    current_result = max_result(current_result, move_evaluation)
   return current_result
 
 def minimize(itermoves, count_moves_eval):
@@ -31,7 +31,8 @@ def find_move_with_fewest_opponent_options(board):
 def min_personal_moves(board):
   for move in board.legal_moves:
     board.push(move)
-    yield [move, minimize(legal_moves(board), count_moves_eval)[1]]
+    min_result = minimize(legal_moves(board), count_moves_eval)[1]
+    yield [move, min_result]
     board.pop()
 
 def node_value_eval(move_and_value):
