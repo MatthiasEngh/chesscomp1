@@ -2,13 +2,21 @@ import re
 import chess
 import random
 
-def find_move_with_fewest_opponent_options(board):
+def evaluate_moves_by_options(board):
   moves = iter(board.legal_moves)
-  current_best = apply_metric(board, next(moves))
   for move in moves:
-    current_result = apply_metric(board, move)
-    current_best = max_result(current_best, current_result)
-  return current_best[0]
+    yield apply_metric(board, move)
+
+def minimize(evaluated_moves):
+  current_result = next(evaluated_moves)
+  for move_evaluation in evaluated_moves:
+    current_result = min_result(current_result, move_evaluation)
+  return current_result
+
+def find_move_with_fewest_opponent_options(board):
+  evaluated_moves = evaluate_moves_by_options(board)
+  result = minimize(evaluated_moves)
+  return result[0]
 
 def evaluate_position(board):
   return len(list(board.legal_moves))
@@ -20,10 +28,9 @@ def evaluate_move(board, move):
   return evaluation
 
 def apply_metric(board, move):
-  result = [move, evaluate_move(board, move)]
-  return result
+  return [move, evaluate_move(board, move)]
 
-def max_result(result1, result2):
+def min_result(result1, result2):
   if result1[1] < result2[1]: # minimizes opponent moves
     return result1
   elif result1[1] == result2[1]:
