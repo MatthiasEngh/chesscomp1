@@ -24,11 +24,7 @@ def legal_moves(board):
   for move in board.legal_moves:
     yield [move, board]
 
-def find_move_with_fewest_opponent_options(board):
-  result = minimize(legal_moves(board), count_moves_eval)
-  return result[0]
-
-def min_personal_moves(board):
+def moves_with_minimized_responses(board):
   for move in board.legal_moves:
     board.push(move)
     min_result = minimize(legal_moves(board), count_moves_eval)[1]
@@ -39,8 +35,8 @@ def node_value_eval(move_and_value):
   return move_and_value[1]
 
 def find_move_with_max_next_turn_options(board):
-  moves_with_minimized_responses = min_personal_moves(board)
-  result = maximize(moves_with_minimized_responses, node_value_eval)
+  move_data = moves_with_minimized_responses(board)
+  result = maximize(move_data, node_value_eval)
   return result[0]
 
 def count_moves_eval(move_and_board):
