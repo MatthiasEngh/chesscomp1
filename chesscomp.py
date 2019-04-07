@@ -6,13 +6,15 @@ def evaluate_nodes(nodes, evaluator):
   for node in nodes:
     yield apply_metric(node, evaluator)
 
-def maximize(evaluated_moves):
+def maximize(itermoves, count_moves_eval):
+  evaluated_moves = evaluate_nodes(itermoves, count_moves_eval)
   current_result = next(evaluated_moves)
   for move_evaluation in evaluated_moves:
     current_result = min_result(current_result, move_evaluation)
   return current_result
 
-def minimize(evaluated_moves):
+def minimize(itermoves, count_moves_eval):
+  evaluated_moves = evaluate_nodes(itermoves, count_moves_eval)
   current_result = next(evaluated_moves)
   for move_evaluation in evaluated_moves:
     current_result = min_result(current_result, move_evaluation)
@@ -23,14 +25,21 @@ def legal_moves(board):
     yield [move, board]
 
 def find_move_with_fewest_opponent_options(board):
-  itermoves = legal_moves(board)
-  moves_with_options = evaluate_nodes(itermoves, count_moves_eval)
-  result = minimize(moves_with_options)
+  result = minimize(legal_moves(board), count_moves_eval)
   return result[0]
 
+def min_personal_moves(board):
+  for move in board.legal_moves:
+    board.push(move)
+    yield [move, minimize(legal_moves(board), count_moves_eval)[1]]
+    board.pop
+
+def node_value_eval(move_and_value):
+  return move_and_value[1]
+
 def find_move_with_max_next_turn_options(board):
-  moves_with_minimized_options = (board)
-  result = maximize(moves_with_minimized_options)
+  moves_with_minimized_responses = min_personal_moves(board)
+  result = maximize(moves_with_minimized_responses, node_value_eval)
   return result[0]
 
 def count_moves_eval(move_and_board):
@@ -62,6 +71,6 @@ def max_result(result1, result2):
 
 def make_move(fen_string):
   board = chess.Board(fen_string)
-  move = find_move_with_fewest_opponent_options(board)
+  move = find_move_with_max_next_turn_options(board)
   board.push(move)
   return board.fen()
