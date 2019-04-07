@@ -2,6 +2,13 @@ import re
 import chess
 import random
 
+def find_move_with_fewest_opponent_options(board):
+  moves = iter(board.legal_moves)
+  current_best = apply_metric(board, next(moves))
+  for move in moves:
+    current_result = apply_metric(board, move)
+    current_best = max_result(current_best, current_result)
+  return current_best
 
 def evaluate_position(board):
   return len(list(board.legal_moves))
@@ -26,15 +33,6 @@ def max_result(result1, result2):
 
 def make_move(fen_string):
   board = chess.Board(fen_string)
-  moves = iter(board.legal_moves)
-  current_best = apply_metric(board, next(moves))
-
-  for move in moves:
-    current_result = apply_metric(board, move)
-    current_best = max_result(current_best, current_result)
-
-  # return decision
-  move = current_best[0]
+  move = find_move_with_fewest_opponent_options(board)
   board.push(move)
-
   return board.fen()
