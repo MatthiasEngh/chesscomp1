@@ -1,13 +1,7 @@
-import sys
 import re
 import chess
 import random
 
-# main target, random
-fen_string = sys.argv[1]
-
-board = chess.Board(fen_string)
-moves = iter(board.legal_moves)
 
 def evaluate_position(board):
   return len(board.legal_moves)
@@ -30,14 +24,17 @@ def max_result(result1, result2):
   else:
     return result2
 
-current_best = apply_metric(board, moves.next())
+def make_move(fen_string):
+  board = chess.Board(fen_string)
+  moves = iter(board.legal_moves)
+  current_best = apply_metric(board, moves.next())
 
-for move in moves:
-  current_result = apply_metric(board, move)
-  current_best = max_result(current_best, current_result)
+  for move in moves:
+    current_result = apply_metric(board, move)
+    current_best = max_result(current_best, current_result)
 
-# return decision
-move = current_best[0]
-board.push(move)
+  # return decision
+  move = current_best[0]
+  board.push(move)
 
-print board
+  return board.fen()
