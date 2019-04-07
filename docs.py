@@ -5,10 +5,10 @@ import chess
 def apply_metric(*args, **kwargs):
   """ returns a result formatted [move, evaluation]
     >>> board = chess.Board()
-    >>> def evaluator(board):
+    >>> def evaluator(move_and_board):
     ...   return 1
     >>> move = next(iter(board.legal_moves))
-    >>> result = apply_metric(board, move, evaluator)
+    >>> result = apply_metric([move, board], evaluator)
     >>> type(result[1])
     <class 'int'>
     >>> result[0] == move
