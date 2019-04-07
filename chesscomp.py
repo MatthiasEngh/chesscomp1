@@ -4,7 +4,7 @@ import random
 
 
 def evaluate_position(board):
-  return len(board.legal_moves)
+  return len(list(board.legal_moves))
 
 def evaluate_move(board, move):
   board.push(move)
@@ -27,7 +27,7 @@ def max_result(result1, result2):
 def make_move(fen_string):
   board = chess.Board(fen_string)
   moves = iter(board.legal_moves)
-  current_best = apply_metric(board, moves.next())
+  current_best = apply_metric(board, next(moves))
 
   for move in moves:
     current_result = apply_metric(board, move)
