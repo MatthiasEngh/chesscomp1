@@ -6,18 +6,18 @@ def evaluate_nodes(nodes, evaluator):
   for node in nodes:
     yield apply_metric(node, evaluator)
 
-def maximize(itermoves, count_moves_eval):
-  evaluated_moves = evaluate_nodes(itermoves, count_moves_eval)
-  current_result = next(evaluated_moves)
-  for move_evaluation in evaluated_moves:
-    current_result = max_result(current_result, move_evaluation)
+def maximize(nodes, node_eval):
+  node_evaluations = evaluate_nodes(nodes, node_eval)
+  current_result = next(node_evaluations)
+  for evaluation in node_evaluations:
+    current_result = max_result(current_result, evaluation)
   return current_result
 
-def minimize(itermoves, count_moves_eval):
-  evaluated_moves = evaluate_nodes(itermoves, count_moves_eval)
-  current_result = next(evaluated_moves)
-  for move_evaluation in evaluated_moves:
-    current_result = min_result(current_result, move_evaluation)
+def minimize(nodes, node_eval):
+  node_evaluations = evaluate_nodes(nodes, node_eval)
+  current_result = next(node_evaluations)
+  for evaluation in node_evaluations:
+    current_result = min_result(current_result, evaluation)
   return current_result
 
 def legal_moves(board):
