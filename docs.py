@@ -1,6 +1,7 @@
 import chesscomp
 import doctest
 import chess
+import chess_library as library
 
 def apply_metric(*args, **kwargs):
   """ returns a result formatted [move, evaluation]
@@ -14,7 +15,7 @@ def apply_metric(*args, **kwargs):
     >>> result[0] == move
     True
   """
-  return chesscomp.apply_metric(*args, **kwargs)
+  return library.apply_metric(*args, **kwargs)
 
 def make_move(*args, **kwargs):
   """ takes fen as argument and returns different fen
