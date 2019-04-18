@@ -3,20 +3,6 @@ import doctest
 import chess
 import chess_library as library
 
-def apply_metric(*args, **kwargs):
-  """ returns a result formatted [move, evaluation]
-    >>> board = chess.Board()
-    >>> def evaluator(move_and_board):
-    ...   return 1
-    >>> move = next(iter(board.legal_moves))
-    >>> result = apply_metric([move, board], evaluator)
-    >>> type(result[1])
-    <class 'int'>
-    >>> result[0] == move
-    True
-  """
-  return library.apply_metric(*args, **kwargs)
-
 def make_move(*args, **kwargs):
   """ takes fen as argument and returns different fen
     >>> fen_string = chess.Board().fen()

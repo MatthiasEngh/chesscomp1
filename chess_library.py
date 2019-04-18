@@ -1,8 +1,5 @@
 import random
 
-def apply_metric(node, evaluator):
-  return [node[0], evaluator(node)]
-
 def count_moves_eval(move_and_board):
   board = move_and_board[1]
   move = move_and_board[0]
@@ -13,7 +10,7 @@ def count_moves_eval(move_and_board):
 
 def evaluate_nodes(nodes, evaluator):
   for node in nodes:
-    yield apply_metric(node, evaluator)
+    yield [node[0], evaluator(node)]
 
 def legal_moves(board):
   for move in board.legal_moves:
