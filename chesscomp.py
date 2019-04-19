@@ -12,7 +12,7 @@ def moves_with_minimized_responses(board):
 
 def find_move_with_max_next_turn_options(board):
   move_data = moves_with_minimized_responses(board)
-  result = library.maximize(move_data, library.node_value_eval)
+  result = library.maximize(move_data, library.node_value)
   return result[0]
 
 def make_move(fen_string):

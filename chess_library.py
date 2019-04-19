@@ -46,6 +46,10 @@ def minimize(nodes, node_eval):
     current_result = min_result(current_result, evaluation)
   return current_result
 
-def node_value_eval(move_and_value):
+def node_value(move_and_value):
   return move_and_value[1]
+
+def sort(nodes):
+  return sorted(nodes, key=node_value)
+
 
