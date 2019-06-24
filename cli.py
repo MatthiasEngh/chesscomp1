@@ -2,8 +2,8 @@ import sys
 import chesscomp
 
 # main target, random
-fen_string = sys.argv[1]
+pgn_string = sys.argv[1]
 
-new_fen = chesscomp.make_move(fen_string)
+move = chesscomp.make_move(pgn_string)
 
-print(new_fen)
+print(move)

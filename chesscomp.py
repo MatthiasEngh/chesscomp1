@@ -1,5 +1,7 @@
 import re
 import chess
+import chess.pgn
+import io
 import random
 import chess_library as library
 
@@ -10,9 +12,10 @@ def moves_with_minimized_responses(board):
     yield [move, min_result]
     board.pop()
 
-def make_move(fen_string):
-  board = chess.Board(fen_string)
+def make_move(pgn_string):
+  pgn = io.StringIO(pgn_string)
+  game = chess.pgn.read_game(pgn)
+  board = game.board()
   move_data = moves_with_minimized_responses(board)
   result = library.maximize(move_data, library.node_value)
-  board.push(result[0])
-  return board.fen()
+  return result[0]
