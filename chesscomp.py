@@ -10,13 +10,9 @@ def moves_with_minimized_responses(board):
     yield [move, min_result]
     board.pop()
 
-def find_move_with_max_next_turn_options(board):
-  move_data = moves_with_minimized_responses(board)
-  result = library.maximize(move_data, library.node_value)
-  return result[0]
-
 def make_move(fen_string):
   board = chess.Board(fen_string)
-  move = find_move_with_max_next_turn_options(board)
-  board.push(move)
+  move_data = moves_with_minimized_responses(board)
+  result = library.maximize(move_data, library.node_value)
+  board.push(result[0])
   return board.fen()
