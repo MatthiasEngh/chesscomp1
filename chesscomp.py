@@ -59,11 +59,15 @@ def sort(nodes):
   return sorted(nodes, key=node_value)
 
 def moves_with_minimized_responses(board):
-  for move in board.legal_moves:
+  all_legal_moves = list(board.legal_moves)
+  result = [None] * len(all_legal_moves)
+  for i in range(len(all_legal_moves)):
+    move = all_legal_moves[i]
     board.push(move)
     min_result = minimize(legal_moves(board), count_moves_eval)[1]
-    yield [move, min_result]
+    result[i] = [move, min_result]
     board.pop()
+  return result
 
 def make_move(pgn_string):
   pgn = io.StringIO(pgn_string)
