@@ -6,20 +6,11 @@ import random
 
 import random
 
-def count_moves_eval(move_and_board):
-  board = move_and_board[1]
-  move = move_and_board[0]
+def count_responses(move, board):
   board.push(move)
   move_count = len(list(board.legal_moves))
   board.pop()
   return move_count
-
-def evaluate_nodes(nodes, evaluator):
-  for node in nodes:
-    yield [node[0], evaluator(node)]
-
-def node_value(move_and_value):
-  return move_and_value[1]
 
 def make_move(pgn_string):
   pgn = io.StringIO(pgn_string)
@@ -27,17 +18,15 @@ def make_move(pgn_string):
   board = game.board()
 
   all_legal_moves = list(board.legal_moves)
-  move_data = [None] * len(all_legal_moves)
+  next_turn_options_count_minima = [None] * len(all_legal_moves)
   for i in range(len(all_legal_moves)):
     move = all_legal_moves[i]
     board.push(move)
 
-    next_turn_options_count = evaluate_nodes(
-      [[move, board] for move in board.legal_moves],
-      count_moves_eval
-    )
-    current_result = next(next_turn_options_count)
-    for evaluation in next_turn_options_count:
+    next_turn_options_count = [[move, count_responses(move, board)] for move in board.legal_moves]
+
+    current_result = next_turn_options_count[0]
+    for evaluation in next_turn_options_count[1:]:
       if current_result[1] < evaluation[1]:
         pass
       elif current_result[1] == evaluation[1]:
@@ -45,15 +34,11 @@ def make_move(pgn_string):
       else:
         current_result = evaluation
 
-    move_data[i] = [move, current_result[1]]
+    next_turn_options_count_minima[i] = [move, current_result[1]]
     board.pop()
 
-  next_turn_options_count_minima = evaluate_nodes(
-    move_data,
-    node_value
-  )
-  current_result = next(next_turn_options_count_minima)
-  for evaluation in next_turn_options_count_minima:
+  current_result = next_turn_options_count_minima[0]
+  for evaluation in next_turn_options_count_minima[1:]:
     if current_result[1] > evaluation[1]:
       pass
     elif current_result[1] == evaluation[1]:
