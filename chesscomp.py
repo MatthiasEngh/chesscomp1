@@ -16,17 +16,15 @@ def move_minimum(move1, board):
   return result
 
 def make_move(board):
-  next_turn_options_count_minima = []
+  current_best = 0
   for move in board.legal_moves:
-    next_turn_options_count_minima.append([move, move_minimum(move, board)])
-
-  result = next_turn_options_count_minima[0]
-  for evaluation in next_turn_options_count_minima[1:]:
-    if result[1] > evaluation[1]:
-      pass
-    elif result[1] == evaluation[1]:
-      result = random.choice([result, evaluation])
+    evaluation = move_minimum(move, board)
+    if current_best > evaluation:
+      next
+    elif current_best == evaluation:
+      result = random.choice([result, move])
     else:
-      result = evaluation
+      current_best = evaluation
+      result = move
 
-  return result[0]
+  return result
