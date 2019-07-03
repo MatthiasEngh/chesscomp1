@@ -38,25 +38,15 @@ def maximize(nodes, node_eval):
   return current_result
 
 def min_result(result1, result2):
-  if result1[1] < result2[1]: # minimizes result
+  if result1[1] < result2[1]:
     return result1
   elif result1[1] == result2[1]:
     return random.choice([result1, result2])
   else:
     return result2
 
-def minimize(nodes, node_eval):
-  node_evaluations = evaluate_nodes(nodes, node_eval)
-  current_result = next(node_evaluations)
-  for evaluation in node_evaluations:
-    current_result = min_result(current_result, evaluation)
-  return current_result
-
 def node_value(move_and_value):
   return move_and_value[1]
-
-def sort(nodes):
-  return sorted(nodes, key=node_value)
 
 def make_move(pgn_string):
   pgn = io.StringIO(pgn_string)
@@ -68,8 +58,13 @@ def make_move(pgn_string):
   for i in range(len(all_legal_moves)):
     move = all_legal_moves[i]
     board.push(move)
-    min_result = minimize(legal_moves(board), count_moves_eval)[1]
-    move_data[i] = [move, min_result]
+
+    node_evaluations = evaluate_nodes(legal_moves(board), count_moves_eval)
+    current_result = next(node_evaluations)
+    for evaluation in node_evaluations:
+      current_result = min_result(current_result, evaluation)
+
+    move_data[i] = [move, current_result[1]]
     board.pop()
 
   result = maximize(move_data, node_value)
