@@ -20,31 +20,29 @@ def make_move(pgn_string):
   all_legal_moves = list(board.legal_moves)
   next_turn_options_count_minima = [None] * len(all_legal_moves)
   for i in range(len(all_legal_moves)):
-    move = all_legal_moves[i]
-    board.push(move)
+    board.push(all_legal_moves[i])
 
     next_turn_options_count = [[move, count_responses(move, board)] for move in board.legal_moves]
 
-    current_result = next_turn_options_count[0]
+    worst_response_with_value = next_turn_options_count[0]
     for evaluation in next_turn_options_count[1:]:
-      if current_result[1] < evaluation[1]:
+      if worst_response_with_value[1] < evaluation[1]:
         pass
-      elif current_result[1] == evaluation[1]:
-        current_result = random.choice([current_result, evaluation])
+      elif worst_response_with_value[1] == evaluation[1]:
+        worst_response_with_value = random.choice([worst_response_with_value, evaluation])
       else:
-        current_result = evaluation
+        worst_response_with_value = evaluation
 
-    next_turn_options_count_minima[i] = [move, current_result[1]]
+    next_turn_options_count_minima[i] = [all_legal_moves[i], worst_response_with_value[1]]
     board.pop()
 
-  current_result = next_turn_options_count_minima[0]
+  best_move_with_value = next_turn_options_count_minima[0]
   for evaluation in next_turn_options_count_minima[1:]:
-    if current_result[1] > evaluation[1]:
+    if best_move_with_value[1] > evaluation[1]:
       pass
-    elif current_result[1] == evaluation[1]:
-      current_result = random.choice([current_result, evaluation])
+    elif best_move_with_value[1] == evaluation[1]:
+      best_move_with_value = random.choice([best_move_with_value, evaluation])
     else:
-      current_result = evaluation
-  result = current_result
+      best_move_with_value = evaluation
 
-  return result[0]
+  return best_move_with_value[0]
