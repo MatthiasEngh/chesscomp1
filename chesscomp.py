@@ -22,14 +22,6 @@ def legal_moves(board):
   for move in board.legal_moves:
     yield [move, board]
 
-def max_result(result1, result2):
-  if result1[1] > result2[1]: # max result
-    return result1
-  elif result1[1] == result2[1]:
-    return random.choice([result1, result2])
-  else:
-    return result2
-
 def node_value(move_and_value):
   return move_and_value[1]
 
@@ -60,7 +52,12 @@ def make_move(pgn_string):
   node_evaluations = evaluate_nodes(move_data, node_value)
   current_result = next(node_evaluations)
   for evaluation in node_evaluations:
-    current_result = max_result(current_result, evaluation)
+    if current_result[1] > evaluation[1]:
+      pass
+    elif current_result[1] == evaluation[1]:
+      current_result = random.choice([current_result, evaluation])
+    else:
+      current_result = evaluation
   result = current_result
 
   return result[0]
