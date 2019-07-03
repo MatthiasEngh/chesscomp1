@@ -32,12 +32,12 @@ def make_move(pgn_string):
     move = all_legal_moves[i]
     board.push(move)
 
-    node_evaluations = evaluate_nodes(
+    next_turn_options_count = evaluate_nodes(
       [[move, board] for move in board.legal_moves],
       count_moves_eval
     )
-    current_result = next(node_evaluations)
-    for evaluation in node_evaluations:
+    current_result = next(next_turn_options_count)
+    for evaluation in next_turn_options_count:
       if current_result[1] < evaluation[1]:
         pass
       elif current_result[1] == evaluation[1]:
@@ -48,12 +48,12 @@ def make_move(pgn_string):
     move_data[i] = [move, current_result[1]]
     board.pop()
 
-  node_evaluations = evaluate_nodes(
+  next_turn_options_count_minima = evaluate_nodes(
     move_data,
     node_value
   )
-  current_result = next(node_evaluations)
-  for evaluation in node_evaluations:
+  current_result = next(next_turn_options_count_minima)
+  for evaluation in next_turn_options_count_minima:
     if current_result[1] > evaluation[1]:
       pass
     elif current_result[1] == evaluation[1]:
