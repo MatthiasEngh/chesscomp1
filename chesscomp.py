@@ -27,13 +27,13 @@ def make_move(pgn_string):
   for move in board.legal_moves:
     next_turn_options_count_minima.append([move, move_minimum(move, board)])
 
-  best_move_with_value = next_turn_options_count_minima[0]
+  result = next_turn_options_count_minima[0]
   for evaluation in next_turn_options_count_minima[1:]:
-    if best_move_with_value[1] > evaluation[1]:
+    if result[1] > evaluation[1]:
       pass
-    elif best_move_with_value[1] == evaluation[1]:
-      best_move_with_value = random.choice([best_move_with_value, evaluation])
+    elif result[1] == evaluation[1]:
+      result = random.choice([best_move_with_value, evaluation])
     else:
-      best_move_with_value = evaluation
+      result = evaluation
 
-  return best_move_with_value[0]
+  return result[0]
