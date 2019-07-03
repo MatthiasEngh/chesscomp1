@@ -1,4 +1,3 @@
-import re
 import chess
 import chess.pgn
 import random
