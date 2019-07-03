@@ -1,7 +1,6 @@
 import re
 import chess
 import chess.pgn
-import io
 import random
 
 def count_responses(move, board):
@@ -16,11 +15,7 @@ def move_minimum(move1, board):
   board.pop()
   return result
 
-def make_move(pgn_string):
-  pgn = io.StringIO(pgn_string)
-  game = chess.pgn.read_game(pgn)
-  board = game.board()
-
+def make_move(board):
   next_turn_options_count_minima = []
   for move in board.legal_moves:
     next_turn_options_count_minima.append([move, move_minimum(move, board)])
