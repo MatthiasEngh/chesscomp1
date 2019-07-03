@@ -62,6 +62,7 @@ def make_move(pgn_string):
   pgn = io.StringIO(pgn_string)
   game = chess.pgn.read_game(pgn)
   board = game.board()
+
   all_legal_moves = list(board.legal_moves)
   move_data = [None] * len(all_legal_moves)
   for i in range(len(all_legal_moves)):
@@ -70,5 +71,6 @@ def make_move(pgn_string):
     min_result = minimize(legal_moves(board), count_moves_eval)[1]
     move_data[i] = [move, min_result]
     board.pop()
+
   result = maximize(move_data, node_value)
   return result[0]
