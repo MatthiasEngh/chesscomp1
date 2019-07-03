@@ -4,7 +4,7 @@ def count_responses(fen):
   return len(list(chess.Board(fen).legal_moves))
 
 def mate_or_minimum(response_counts):
-  return len(response_counts) and min(response_counts) or 9001
+  return len(response_counts) == 0 and 9001 or min(response_counts)
 
 def move_minimum(fen):
   return mate_or_minimum([count_responses(new_position(fen, move)) for move in chess.Board(fen).legal_moves])
