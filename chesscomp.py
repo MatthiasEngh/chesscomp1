@@ -58,21 +58,17 @@ def node_value(move_and_value):
 def sort(nodes):
   return sorted(nodes, key=node_value)
 
-def moves_with_minimized_responses(board):
-  all_legal_moves = list(board.legal_moves)
-  result = [None] * len(all_legal_moves)
-  for i in range(len(all_legal_moves)):
-    move = all_legal_moves[i]
-    board.push(move)
-    min_result = minimize(legal_moves(board), count_moves_eval)[1]
-    result[i] = [move, min_result]
-    board.pop()
-  return result
-
 def make_move(pgn_string):
   pgn = io.StringIO(pgn_string)
   game = chess.pgn.read_game(pgn)
   board = game.board()
-  move_data = moves_with_minimized_responses(board)
+  all_legal_moves = list(board.legal_moves)
+  move_data = [None] * len(all_legal_moves)
+  for i in range(len(all_legal_moves)):
+    move = all_legal_moves[i]
+    board.push(move)
+    min_result = minimize(legal_moves(board), count_moves_eval)[1]
+    move_data[i] = [move, min_result]
+    board.pop()
   result = maximize(move_data, node_value)
   return result[0]
