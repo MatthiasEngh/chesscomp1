@@ -4,8 +4,6 @@ import chess.pgn
 import io
 import random
 
-import random
-
 def count_responses(move, board):
   board.push(move)
   move_count = len(list(board.legal_moves))
