@@ -1,6 +1,4 @@
-import chess
-import chess.pgn
-import random
+import chess, chess.pgn, random
 
 def count_responses(fen):
   return len(list(chess.Board(fen).legal_moves))
