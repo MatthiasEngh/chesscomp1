@@ -14,17 +14,7 @@ def count_responses(move, board):
 
 def move_minimum(move1, board):
   board.push(move1)
-
-  next_turn_options_count = [count_responses(move2, board) for move2 in board.legal_moves]
-  result = next_turn_options_count[0]
-  for evaluation in next_turn_options_count[1:]:
-    if result < evaluation:
-      pass
-    elif result == evaluation:
-      result = random.choice([result, evaluation])
-    else:
-      result = evaluation
-
+  result = min([count_responses(move2, board) for move2 in board.legal_moves])
   board.pop()
   return result
 
