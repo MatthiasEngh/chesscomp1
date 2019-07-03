@@ -10,15 +10,15 @@ def mate_or_minimum(response_counts):
   return len(response_counts) and min(response_counts) or 9001
 
 def move_minimum(fen):
-  return mate_or_minimum([on_updated_board_do(fen, move, count_responses) for move in chess.Board(fen).legal_moves])
+  return mate_or_minimum([count_responses(update_fen(fen, move)) for move in chess.Board(fen).legal_moves])
 
-def on_updated_board_do(fen, move, routine):
+def update_fen(fen, move):
   board = chess.Board(fen)
   board.push(move)
-  return routine(board.fen())
+  return board.fen()
 
 def make_move(fen):
   moves = list(chess.Board(fen).legal_moves)
   random.shuffle(moves)
-  evaluations = [on_updated_board_do(fen, move, move_minimum) for move in moves]
+  evaluations = [move_minimum(update_fen(fen, move)) for move in moves]
   return moves[evaluations.index(max(evaluations))]
