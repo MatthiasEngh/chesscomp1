@@ -23,7 +23,9 @@ def make_move(pgn_string):
   game = chess.pgn.read_game(pgn)
   board = game.board()
 
-  next_turn_options_count_minima = [[move, move_minimum(move, board)] for move in board.legal_moves]
+  next_turn_options_count_minima = []
+  for move in board.legal_moves:
+    next_turn_options_count_minima.append([move, move_minimum(move, board)])
 
   best_move_with_value = next_turn_options_count_minima[0]
   for evaluation in next_turn_options_count_minima[1:]:
