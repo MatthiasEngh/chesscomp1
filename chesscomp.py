@@ -22,15 +22,7 @@ def move_minimum(move1, board):
   return result
 
 def make_move(board):
-  current_best = 0
-  for move in board.legal_moves:
-    evaluation = move_minimum(move, board)
-    if current_best > evaluation:
-      next
-    elif current_best == evaluation:
-      result = random.choice([result, move])
-    else:
-      current_best = evaluation
-      result = move
-
-  return result
+  moves = list(board.legal_moves)
+  random.shuffle(moves)
+  evaluations = [move_minimum(move, board) for move in moves]
+  return moves[evaluations.index(max(evaluations))]
