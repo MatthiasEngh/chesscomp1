@@ -48,7 +48,10 @@ def make_move(pgn_string):
     move_data[i] = [move, current_result[1]]
     board.pop()
 
-  node_evaluations = evaluate_nodes(move_data, node_value)
+  node_evaluations = evaluate_nodes(
+    move_data,
+    node_value
+  )
   current_result = next(node_evaluations)
   for evaluation in node_evaluations:
     if current_result[1] > evaluation[1]:
