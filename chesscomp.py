@@ -3,26 +3,23 @@ import chess
 import chess.pgn
 import random
 
-def count_responses(move, board):
-  board.push(move)
-  move_count = len(list(board.legal_moves))
-  board.pop()
-  return move_count
+def count_responses(board):
+  return len(list(board.legal_moves))
 
 def mate_or_minimum(response_counts):
-  if len(response_counts):
-    return min(response_counts)
-  else:
-    return 9001
+  return len(response_counts) and min(response_counts) or 9001
 
-def move_minimum(move1, board):
-  board.push(move1)
-  result = mate_or_minimum([count_responses(move2, board) for move2 in board.legal_moves])
+def move_minimum(board):
+  return mate_or_minimum([on_updated_board_do(board, move, count_responses) for move in board.legal_moves])
+
+def on_updated_board_do(board, move, routine):
+  board.push(move)
+  result = routine(board)
   board.pop()
   return result
 
 def make_move(board):
   moves = list(board.legal_moves)
   random.shuffle(moves)
-  evaluations = [move_minimum(move, board) for move in moves]
+  evaluations = [on_updated_board_do(board, move, move_minimum) for move in moves]
   return moves[evaluations.index(max(evaluations))]
