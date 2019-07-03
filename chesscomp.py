@@ -30,7 +30,7 @@ def make_move(pgn_string):
     if result[1] > evaluation[1]:
       pass
     elif result[1] == evaluation[1]:
-      result = random.choice([best_move_with_value, evaluation])
+      result = random.choice([result, evaluation])
     else:
       result = evaluation
 
