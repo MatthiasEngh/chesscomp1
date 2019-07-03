@@ -30,13 +30,6 @@ def max_result(result1, result2):
   else:
     return result2
 
-def maximize(nodes, node_eval):
-  node_evaluations = evaluate_nodes(nodes, node_eval)
-  current_result = next(node_evaluations)
-  for evaluation in node_evaluations:
-    current_result = max_result(current_result, evaluation)
-  return current_result
-
 def node_value(move_and_value):
   return move_and_value[1]
 
@@ -64,5 +57,10 @@ def make_move(pgn_string):
     move_data[i] = [move, current_result[1]]
     board.pop()
 
-  result = maximize(move_data, node_value)
+  node_evaluations = evaluate_nodes(move_data, node_value)
+  current_result = next(node_evaluations)
+  for evaluation in node_evaluations:
+    current_result = max_result(current_result, evaluation)
+  result = current_result
+
   return result[0]
