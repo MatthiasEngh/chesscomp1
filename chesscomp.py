@@ -1,19 +1,22 @@
 import chess, chess.pgn, random
 
 def count_responses(fen):
-  if chess.Board(fen).is_checkmate():
+  board = chess.Board(fen)
+  if board.is_checkmate():
     return 9001
-  return - len(list(chess.Board(fen).legal_moves))
+  return - len(list(board.legal_moves))
 
 def max_next_move(fen):
-  if chess.Board(fen).is_checkmate():
+  board = chess.Board(fen)
+  if board.is_checkmate():
     return -9001
-  return max([count_responses(new_position(fen, move)) for move in chess.Board(fen).legal_moves])
+  return max([count_responses(new_position(fen, move)) for move in board.legal_moves])
 
 def move_minimum(fen):
-  if chess.Board(fen).is_checkmate():
+  board = chess.Board(fen)
+  if board.is_checkmate():
     return 9001
-  return min([max_next_move(new_position(fen, move)) for move in chess.Board(fen).legal_moves])
+  return min([max_next_move(new_position(fen, move)) for move in board.legal_moves])
 
 def new_position(fen, move):
   board = chess.Board(fen)
