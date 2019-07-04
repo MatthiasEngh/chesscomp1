@@ -4,7 +4,9 @@ def count_responses(fen):
   return len(list(chess.Board(fen).legal_moves))
 
 def move_minimum(fen):
-  return chess.Board(fen).is_checkmate() and 9001 or min([count_responses(new_position(fen, move)) for move in chess.Board(fen).legal_moves])
+  if chess.Board(fen).is_checkmate():
+    return 9001
+  return min([count_responses(new_position(fen, move)) for move in chess.Board(fen).legal_moves])
 
 def new_position(fen, move):
   board = chess.Board(fen)
