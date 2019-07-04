@@ -28,5 +28,4 @@ def make_move(fen):
   random.shuffle(moves)
   evaluations = [move_minimum(new_position(fen, move)) for move in moves]
   found_max = max(evaluations)
-  print("found_max: ", found_max)
   return moves[evaluations.index(found_max)]
