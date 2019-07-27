@@ -11,13 +11,16 @@ def count_responses(board, move):
   board.pop()
   return result
 
-def max_next_move(fen):
-  board = new_board(fen)
+def max_next_move(board, move):
+  board.push(move)
   if board.is_checkmate():
-    return -9001
-  if board.is_game_over():
-    return -25
-  return max([count_responses(board, move) for move in board.legal_moves])
+    result = -9001
+  elif board.is_game_over():
+    result = -25
+  else:
+    result = max([count_responses(board, move) for move in board.legal_moves])
+  board.pop()
+  return result
 
 def move_minimum(fen):
   board = new_board(fen)
@@ -25,7 +28,7 @@ def move_minimum(fen):
     return 9001
   if board.is_game_over():
     return -25
-  return min([max_next_move(new_position(fen, move)) for move in board.legal_moves])
+  return min([max_next_move(board, move) for move in board.legal_moves])
 
 def new_board(fen):
   return chess.Board(fen)
