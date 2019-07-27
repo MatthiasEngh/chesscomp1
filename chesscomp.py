@@ -36,11 +36,6 @@ def move_minimum(board, move):
 def new_board(fen):
   return chess.Board(fen)
 
-def new_position(fen, move):
-  board = new_board(fen)
-  board.push(move)
-  return board.fen()
-
 def make_move(fen):
   moves = list(new_board(fen).legal_moves)
   random.shuffle(moves)
