@@ -37,8 +37,9 @@ def new_board(fen):
   return chess.Board(fen)
 
 def make_move(fen):
-  moves = list(new_board(fen).legal_moves)
+  board = new_board(fen)
+  moves = list(board.legal_moves)
   random.shuffle(moves)
-  evaluations = [move_minimum(new_board(fen), move) for move in moves]
+  evaluations = [move_minimum(board, move) for move in moves]
   found_max = max(evaluations)
   return moves[evaluations.index(found_max)]
